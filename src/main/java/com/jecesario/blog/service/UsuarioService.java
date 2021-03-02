@@ -13,6 +13,13 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 
-	
+	public Usuario cadastrarUsuario(Usuario usuario) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		String passEncoder = encoder.encode(usuario.getSenha());
+		usuario.setSenha(passEncoder);
+
+		return repository.save(usuario);
+	}
 
 }
