@@ -22,45 +22,38 @@ import com.jecesario.blog.repository.PostagemRepository;
 @RequestMapping(value = "/postagens")
 @CrossOrigin("*")
 public class PostagemController {
-	
+
 	@Autowired
 	private PostagemRepository repository;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Postagem>> getAll() {
 		return ResponseEntity.ok().body(repository.findAll());
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Postagem> getById(@PathVariable long id) {
-		return repository.findById(id)
-				.map(obj -> ResponseEntity.ok().body(obj))
+		return repository.findById(id).map(obj -> ResponseEntity.ok().body(obj))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Postagem>> getByTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Postagem> create (@RequestBody Postagem postagem) {
+	public ResponseEntity<Postagem> create(@RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<Postagem> update (@RequestBody Postagem postagem) {
+	public ResponseEntity<Postagem> update(@RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
-	
-	/*
-	 * @PatchMapping public ResponseEntity<Postagem> updatePatch (@RequestBody
-	 * Postagem postagem) { return
-	 * ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem)); }
-	 */
-	
+
 	@DeleteMapping("/{id}")
-	public void delete (@PathVariable long id) {
+	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 	}
 }

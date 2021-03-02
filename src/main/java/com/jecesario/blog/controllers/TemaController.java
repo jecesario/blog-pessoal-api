@@ -19,8 +19,8 @@ import com.jecesario.blog.models.Tema;
 import com.jecesario.blog.repository.TemaRepository;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping(value = "/tema")
+@RequestMapping(value = "/temas")
+@CrossOrigin("*")
 public class TemaController {
 
 	@Autowired
@@ -35,13 +35,18 @@ public class TemaController {
 	public ResponseEntity<Tema> getById(@PathVariable long id) {
 		return repository.findById(id).map(obj -> ResponseEntity.ok(obj)).orElse(ResponseEntity.notFound().build());
 	}
+	
+	@GetMapping("/descricao/{descricao}")
+	public ResponseEntity<List<Tema>> getByDescricao(@PathVariable String descricao) {
+		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(descricao));
+	}
 
 	@PostMapping
 	public ResponseEntity<Tema> create(@RequestBody Tema tema) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(tema));
 	}
 
-	@PutMapping("/nome/{nome}")
+	@PutMapping
 	public ResponseEntity<Tema> update(@RequestBody Tema tema) {
 		return ResponseEntity.ok(repository.save(tema));
 	}
