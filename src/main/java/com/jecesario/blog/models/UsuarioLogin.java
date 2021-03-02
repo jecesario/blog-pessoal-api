@@ -1,6 +1,6 @@
 package com.jecesario.blog.models;
 
-public class UsuariosLogin {
+public class UsuarioLogin {
 	
 	private String nome;
 	
