@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jecesario.blog.models.Usuario;
 import com.jecesario.blog.models.UsuarioLogin;
 import com.jecesario.blog.service.UsuarioService;
 
@@ -21,10 +22,15 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService service;
-	
+
 	@PostMapping("/logar")
 	public ResponseEntity<UsuarioLogin> logar(@RequestBody Optional<UsuarioLogin> user) {
 		return service.logar(user).map(obj -> ResponseEntity.ok(obj))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	}
+
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarUsuario(usuario));
 	}
 }
