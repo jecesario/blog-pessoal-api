@@ -18,25 +18,18 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket docket() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.jecesario.blog.controllers"))
-				.paths(PathSelectors.any())
-				.build()
-				.apiInfo(apiInfo());
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				.apis(RequestHandlerSelectors.basePackage("com.jecesario.blog.controllers")).paths(PathSelectors.any())
+				.build().apiInfo(apiInfo());
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder()
-				.title("Blog Pessoal")
-				.description("API do Projeto de Blog Pessoal")
-				.version("1.0")
-				.contact(contact())
-				.build();
+		return new ApiInfoBuilder().title("Blog Pessoal").description("API do Projeto de Blog Pessoal").version("1.0")
+				.contact(contact()).build();
 	}
 
 	private Contact contact() {
 		return new Contact("Jean Cesario", "https://github.com/jecesario/", "Desenvolvedor Java Junior");
 	}
-	
+
 }
